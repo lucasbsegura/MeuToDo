@@ -10,16 +10,20 @@ using System.Threading.Tasks;
 namespace MeuTodo.Controllers
 {
     [ApiController]
-    [Route("v1")]
+    [Route("v1/todo/")]
     public class TodoController : ControllerBase
     {
-        public TodoController() { }
+        private readonly AppDbContext _context2;
+        public TodoController(AppDbContext contex2) 
+        { 
+            _context2 = context2;
+        }
 
         [HttpGet]
         [Route("todos")]
-        public async Task<IActionResult> GetAsync([FromServices]AppDbContext context)
+        public async Task<IActionResult> GetAsync()
         {
-            var todos = await context.Todos
+            var todos = await _context2.Todos
                                         .AsNoTracking()
                                         .ToListAsync();
             
